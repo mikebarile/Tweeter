@@ -1,13 +1,24 @@
 class FollowToggle {
-  constructor($el) {
-    this.userID = $el.data("user-id");
-    if($el.data("initial-follow-state") === true){
-      this.followState = "followed";
+  constructor($el, options) {
+    this.$el = $el;
+    this.userID = $el.data("user-id") || options["user-id"];
+    if(this.$el.data("initial-follow-state")) {
+      if($el.data("initial-follow-state") === true){
+        this.followState = "followed";
+      }
+      else {
+        this.followState = "unfollowed";
+      }
     }
     else {
-      this.followState = "unfollowed";
+      let tempFollowState = options["initial-follow-state"];
+      if(tempFollowState === true){
+        this.followState = "followed";
+      }
+      else {
+        this.followState = "unfollowed";
+      }
     }
-    this.$el = $el;
     this.render();
     this.handleClick();
   }

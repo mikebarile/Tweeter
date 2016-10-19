@@ -1,3 +1,5 @@
+let FollowToggle = require('./follow_toggle.js');
+
 class UsersSearch {
   constructor(el) {
     this.$el = $(el);
@@ -24,11 +26,14 @@ class UsersSearch {
   renderResults(users){
     let that = this;
     this.ul.empty();
-    console.log(users);
     $(users).each((i, user) => {
       let $user = $(user);
       let $li = $(`<li><a href="/users/${$user.attr("id")}">${$user.attr("username")}</a></li>`);
+      let $button = $(`<button class="follow-toggle"></button>`);
+      let a = new FollowToggle($button, {"user-id": $user.attr("id"), "initial-follow-state": $user.attr("followed")});
+      console.log(a);
       that.ul.append($li);
+      $li.append($button);
     });
   }
 }
